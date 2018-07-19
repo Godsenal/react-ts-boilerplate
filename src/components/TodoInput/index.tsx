@@ -1,5 +1,6 @@
 import React, { ReactEventHandler } from 'react';
-import { Todo } from '../../containers/TodoPage/TodoPage';
+import { Todo } from '../../modules';
+const styles = require('./TodoInput.scss');
 
 export interface TodoInputProps {
   handleAdd: (todo: Todo) => void,
@@ -36,8 +37,14 @@ export default class TodoInput extends React.Component<TodoInputProps, State> {
   render() {
     const { value } = this.state;
     return (
-      <div>
-        <input value={value} onChange={this.handleChange} onKeyPress={this.handleKeyPress}/>
+      <div className={styles.container}>
+        <input
+          placeholder="What needs to be done?"
+          className={styles.input}
+          value={value}
+          onChange={this.handleChange}
+          onKeyPress={this.handleKeyPress}
+        />
       </div>
     )
   }

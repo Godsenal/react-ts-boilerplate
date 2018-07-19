@@ -1,10 +1,8 @@
 import React from 'react';
 import { TodoList, TodoInput } from '../../components';
+import { Todo } from '../../modules';
+const styles = require('./TodoPage.scss');
 
-export interface Todo {
-  id: number,
-  description: string,
-}
 interface State {
   readonly list: Todo[];
 }
@@ -26,7 +24,7 @@ export default class TodoPage extends React.Component<{}, State> {
   render() {
     const { list } = this.state;
     return (
-      <div>
+      <div className={styles.container}>
         <TodoInput handleAdd={this.handleAdd} />
         <TodoList list={list} handleRemove={this.handleRemove} />
       </div>

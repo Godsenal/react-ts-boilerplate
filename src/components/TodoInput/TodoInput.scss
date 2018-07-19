@@ -1,0 +1,13 @@
+@import '../../styles/util.scss';
+
+.container {
+    margin-top: 2rem;
+}
+.input {
+    width: 100%;
+    font-size: 24px;
+    border: none;
+    border-bottom: 1px solid $color-border-grey;
+    outline: none;
+    padding: 20px 0;
+}

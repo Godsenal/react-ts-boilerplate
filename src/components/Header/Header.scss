@@ -1,0 +1,14 @@
+@import '../../styles/util.scss';
+
+.container {
+    height: 60px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom: 1px solid $color-border-grey;
+}
+
+.link {
+    margin-left: 10px;
+}

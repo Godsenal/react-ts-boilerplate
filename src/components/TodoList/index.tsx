@@ -1,6 +1,7 @@
 import React from 'react';
-import { Todo } from '../../containers/TodoPage/TodoPage';
+import { Todo } from '../../modules';
 import { TodoItem } from '../';
+const styles = require('./TodoList.scss');
 
 export interface TodoListProps {
   list: Todo[],
@@ -14,7 +15,7 @@ export default class TodoList extends React.Component<TodoListProps> {
   render() {
     const { list, handleRemove } = this.props;
     return(
-      <div>
+      <div className={styles.container}>
         {
           list.map((item: Todo) => {
             const { ...itemProps } = item;

@@ -1,4 +1,5 @@
 import React from 'react';
+const styles = require('./TodoItem.scss');
 
 export interface TodoItemProps {
   id: number,
@@ -11,7 +12,9 @@ const TodoItem: React.SFC<TodoItemProps> = (props) => {
     handleRemove(id);
   }
   return (
-    <div onClick={handleClick}>{description}</div>
+    <div className={styles.container} onClick={handleClick}>
+      <input type="checkbox" />{description}
+    </div>
   );
 }
 
