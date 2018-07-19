@@ -13,9 +13,6 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "typeRoots": [
-      "@types",
-    ]
   },
   "exclude": [
     "node_modules",

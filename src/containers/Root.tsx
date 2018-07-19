@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
@@ -6,7 +6,7 @@ import configureStore from '../store/configureStore';
 
 const store = configureStore();
 
-class Root extends Component {
+class Root extends React.Component {
   render() {
     return (
       <Provider store={store}>
