@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
-import test, { TestState } from './test';
+import todo from './todo';
+import filter from './filter';
+import { RootState } from '../types';
 
-interface RootState {
-  test: TestState,
-}
 const rootReducer = combineReducers<RootState>({
-  test,
+  todo,
+  filter,
 });
 
 export default rootReducer;

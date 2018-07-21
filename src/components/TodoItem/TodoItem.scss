@@ -4,15 +4,11 @@
     display: flex;
     align-items: center;
     font-size: 24px;
-    height: 100px;
 
     margin-top: 10px;
-    padding: 5px 10px;
-
-    border-radius: 10px;
-
-    color:white;
-    background-color: $color-primary-blue;
 
     cursor: pointer;
+}
+.checked {
+    text-decoration: line-through;
 }

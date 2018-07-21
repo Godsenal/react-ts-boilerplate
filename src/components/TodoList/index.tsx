@@ -1,19 +1,15 @@
 import React from 'react';
-import { Todo } from '../../modules';
+import { Todo } from '../../types';
 import { TodoItem } from '../';
 const styles = require('./TodoList.scss');
 
 export interface TodoListProps {
   list: Todo[],
-  handleRemove: (id: number) => void,
-}
-export interface Todo {
-  id: number,
-  description: string,
+  handleToggle: (id: number) => void,
 }
 export default class TodoList extends React.Component<TodoListProps> {
   render() {
-    const { list, handleRemove } = this.props;
+    const { list, handleToggle } = this.props;
     return(
       <div className={styles.container}>
         {
@@ -22,7 +18,7 @@ export default class TodoList extends React.Component<TodoListProps> {
             return (
               <TodoItem
                 key={item.id}
-                handleRemove={handleRemove}
+                handleToggle={handleToggle}
                 {...itemProps}
               />
             )

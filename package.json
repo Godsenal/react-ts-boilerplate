@@ -50,6 +50,7 @@
     "@types/react-dom": "^16.0.6",
     "@types/react-redux": "^6.0.4",
     "@types/react-router-dom": "^4.2.7",
+    "@types/redux-immutable-state-invariant": "^2.0.4",
     "chalk": "^2.3.1",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",

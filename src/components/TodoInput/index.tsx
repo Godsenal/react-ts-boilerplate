@@ -1,9 +1,9 @@
 import React, { ReactEventHandler } from 'react';
-import { Todo } from '../../modules';
+import { Todo } from '../../types';
 const styles = require('./TodoInput.scss');
 
 export interface TodoInputProps {
-  handleAdd: (todo: Todo) => void,
+  handleAdd: (id: number, description: string) => void,
 }
 interface State {
   readonly value: string,
@@ -20,19 +20,16 @@ export default class TodoInput extends React.Component<TodoInputProps, State> {
     });
   }
   handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && this.state.value) {
       this.handleAdd(this.state.value);
     }
   }
   handleAdd = (description: string) => {
-    const todo = {
-      id: this.currentId++,
-      description,
-    };
+    const id = this.currentId++;
     this.setState({
       value: '',
     });
-    this.props.handleAdd(todo);
+    this.props.handleAdd(id, description);
   }
   render() {
     const { value } = this.state;
