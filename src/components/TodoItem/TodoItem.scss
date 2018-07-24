@@ -1,8 +1,7 @@
 @import '../../styles/util.scss';
 
-.container {
-    display: flex;
-    align-items: center;
+.item {
+    color: black;
     font-size: 24px;
 
     margin-top: 10px;
@@ -11,4 +10,7 @@
 }
 .checked {
     text-decoration: line-through;
+    color: $color-border-grey;
+
+    transition: color 0.2s;
 }

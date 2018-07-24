@@ -4,7 +4,7 @@ import rootReducer from '../reducers';
 import { RootState } from '../types';
 
 function configureStoreProd(initialState?: object | undefined) {
-  // Redux middlewares like thunks
+  // Redux middlewares like thunks, saga
   // const middlewares = [
   //  *here*
   // ];

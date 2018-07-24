@@ -14,19 +14,17 @@ const styles = require('./App.scss');
 class App extends React.Component {
   render() {
     return (
-      <Router>
-        <div className={styles.container}>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route>
-              <div>
-                <Header />
-                <Route path="/todo" component={TodoPage} />
-              </div>
-            </Route>
-          </Switch>
-        </div>
-      </Router>
+      <div className={styles.container}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route>
+            <div>
+              <Header />
+              <Route path="/todo" component={TodoPage} />
+            </div>
+          </Route>
+        </Switch>
+      </div>
     );
   }
 }

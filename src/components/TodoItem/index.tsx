@@ -9,13 +9,15 @@ export interface TodoItemProps {
 }
 const TodoItem: React.SFC<TodoItemProps> = (props) => {
   const { id, description, done, handleToggle } = props;
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
     handleToggle(id);
   }
   return (
-    <div className={`${styles.container} ${done && styles.checked}`} onClick={handleClick}>
-      {description}
-    </div>
+    <ul>
+      <li className={`${styles.item} ${done && styles.checked}`} onClick={handleClick}>
+        {description}
+      </li>
+    </ul>
   );
 }
 

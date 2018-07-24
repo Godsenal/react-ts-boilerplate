@@ -1,4 +1,5 @@
-import { Todo } from '../types';
+import { createSelector } from 'reselect';
+import { RootState, Todo } from '../types';
 import { TodoAction } from '../actions/todo';
 import { 
   ADD_TODO,
@@ -8,6 +9,8 @@ import {
 // Redux State must be immutable.
 // Add 'readonly' property.
 // This is not guarantee immutablity on nested object.
+
+/* Type Definition */
 export interface TodoState {
   readonly todos: Todo[],
 }
@@ -15,6 +18,32 @@ export interface TodoState {
 const initialState: TodoState = {
   todos: []
 }
+
+/* Selector Definition */
+const todoSelector = (state: RootState) => state.todo.todos;
+const filterSelector = (state: RootState) => state.filter.filter;
+
+export const getVisibleTodo = createSelector(
+  [todoSelector, filterSelector],
+  (todos, filter) => {
+    switch (filter) {
+      case 'ALL': {
+        return todos;
+      }
+      case 'COMPLETED': {
+        return todos.filter(item => item.done);
+      }
+      case 'INCOMPLETED': {
+        return todos.filter(item => !item.done)
+      }
+      default: {
+        return todos;
+      }
+    }
+  }
+)
+
+/* Reducer Definition */
 export default function todo(state: TodoState = initialState, action: TodoAction): TodoState  {
   switch (action.type) {
     case ADD_TODO: {

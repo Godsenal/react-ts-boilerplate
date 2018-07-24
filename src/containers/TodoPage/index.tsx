@@ -4,13 +4,13 @@ import { TodoList, TodoInput, TodoFilter } from '../../components';
 import { RootState, Todo, Filter } from '../../types';
 import * as TodoAction from '../../actions/todo';
 import * as FilterAction from '../../actions/filter';
+import { getVisibleTodo } from '../../reducers/todo';
 
 const styles = require('./TodoPage.scss');
 
 /* Use State */
 interface State {
-  readonly todos: Todo[];
-  readonly mode: string;
+  readonly testValue: string;
 }
 /* Use Redux State */
 export interface TodoPageProps {
@@ -21,85 +21,26 @@ export interface TodoPageProps {
   setFilter: (filter: string) => any;
 }
 const mapStateToProps = (state: RootState) => ({
-  todos: state.todo.todos,
+  todos: getVisibleTodo(state),
   filter: state.filter.filter,
 });
-class TodoPage extends React.Component<TodoPageProps, State> {
-  readonly state = {
-    mode: 'state',
-    todos: [],
-  }
-  handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({
-      mode: e.target.value,
-    });
-  }
+class TodoPage extends React.Component<TodoPageProps> {
   handleFilter = (filter: string) => {
     this.props.setFilter(filter);
   }
   handleAdd = (id: number, description: string) => {
-    /* Component State */
-    if (this.state.mode === 'state') {
-      this.setState((prevState: State): State => ({
-        ...prevState,
-        todos: [...prevState.todos, { id, description, done: false }],
-      }));
-    }
-    /* Redux State */
-    else {
-      this.props.addTodo(id, description);
-    }
-    
+    this.props.addTodo(id, description);
   }
   handleToggle = (id: number) => {
-    /* Component State */
-    if (this.state.mode === 'state') {
-      this.setState((prevState: State): State => ({
-        ...prevState,
-        todos: prevState.todos.map(item => {
-          if (item.id === id) {
-            item.done = !item.done;
-          }
-          return item;
-        }),
-      }));
-    }
-    /* Redux State */
-    else {
-      this.props.toggleTodo(id);
-    }
-  }
-  getFilteredTodos = (todos: Todo[]) => {
-    const { filter } = this.props;
-    switch (filter) {
-      case 'ALL': {
-        return todos;
-      }
-      case 'COMPLETED': {
-        return todos.filter(item => item.done);
-      }
-      case 'INCOMPLETED': {
-        return todos.filter(item => !item.done)
-      }
-      default: {
-        return todos;
-      }
-    }
+    this.props.toggleTodo(id);
   }
   render() {
-    const { todos, mode } = this.state;
-    const { todos: todosProp, filter } = this.props;
-    const list = mode === 'state' ? todos : todosProp;
+    const { todos, filter } = this.props;
     return (
       <div className={styles.container}>
-        <h3>This doesn't change ui. Please see how code changed</h3>
-        <select onChange={this.handleSelect}>
-          <option value="state">Use Component State</option>
-          <option value="redux">Use Redux State</option>
-        </select>
         <TodoInput handleAdd={this.handleAdd} />
         <TodoFilter currentFilter={filter} handleFilter={this.handleFilter} filterTypes={Object.keys(Filter)} />
-        <TodoList list={this.getFilteredTodos(list)} handleToggle={this.handleToggle} />
+        <TodoList list={todos} handleToggle={this.handleToggle} />
       </div>
     )
   }
