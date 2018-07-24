@@ -1,9 +1,9 @@
 import React from 'react';
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
 } from 'react-router-dom';
+import { hot } from 'react-hot-loader';
 
 import { Home, TodoPage } from '../';
 import { Header } from '../../components';
@@ -29,5 +29,5 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default hot(module)(App);
 

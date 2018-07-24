@@ -8,11 +8,7 @@ import { getVisibleTodo } from '../../reducers/todo';
 
 const styles = require('./TodoPage.scss');
 
-/* Use State */
-interface State {
-  readonly testValue: string;
-}
-/* Use Redux State */
+/* Props type */
 export interface TodoPageProps {
   todos: Todo[],
   filter: Filter,

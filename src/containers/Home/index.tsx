@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 const Icon = require('../../images/react-icon.png');
 const styles = require('./Home.scss');
 
+// React.SFC : Type for stateless(functional) component
 const Home: React.SFC = () => (
   <div className={styles.container}>
     <h1 className={styles.header}>Welcome!</h1>

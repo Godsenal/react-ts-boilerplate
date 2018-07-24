@@ -19,7 +19,7 @@
     "dist",
     "scripts",
     "acceptance-tests",
-    "config",
+    "webpack",
     "jest",
   ],
 }

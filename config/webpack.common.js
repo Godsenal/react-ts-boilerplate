@@ -36,7 +36,7 @@ module.exports = (option) => ({
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        use: 'ts-loader',
+        use: 'awesome-typescript-loader',
       },
       {
         test: /\.eot(\?v=\d+.\d+.\d+)?$/,
