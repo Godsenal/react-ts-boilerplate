@@ -1,18 +1,24 @@
 import { createStore, compose, applyMiddleware, Store } from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
-import { RootState } from '../types';
+import rootSaga from '../sagas';
 
+const sagaMiddleware = createSagaMiddleware();
 function configureStoreProd(initialState?: object) {
   // Redux middlewares like thunks, saga
-  // const middlewares = [
-  //  *here*
-  // ];
+  const middlewares = [
+    sagaMiddleware,
+  ];
 
   // use ! for telling compiler "this expression cannot be null or undefined here
   // so don't complain about possibility of initialState being null or undefined"
   // https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator
-  return createStore(rootReducer, initialState!);
+  const store = createStore(rootReducer, initialState!, compose(applyMiddleware(...middlewares)));
+
+  sagaMiddleware.run(rootSaga);
+
+  return store;
   // if you applied middlewares above,
   // createStore(rootReducer, initialState, compose( applyMiddleware(...middlewares)));
 }
@@ -23,6 +29,7 @@ function configureStoreProd(initialState?: object) {
 function configureStoreDev(initialState?: object) {
   const middlewares = [
     reduxImmutableStateInvariant(),
+    sagaMiddleware,
     /* Redux middlewares like thunks */
   ];
 
@@ -30,6 +37,8 @@ function configureStoreDev(initialState?: object) {
   const store = createStore(rootReducer, initialState!, composeEnhancers(
     applyMiddleware(...middlewares)
   ));
+
+  sagaMiddleware.run(rootSaga);
 
   if ((module as any).hot) {
     (module as any).hot.accept('../reducers', () => {
@@ -39,6 +48,7 @@ function configureStoreDev(initialState?: object) {
   }
   return store;
 }
+
 
 const configureStore = process.env.NODE_ENV === 'production' ? configureStoreProd : configureStoreDev;
 export default configureStore;

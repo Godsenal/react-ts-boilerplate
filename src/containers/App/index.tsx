@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
-import { Home, TodoPage } from '../';
+import { Home, TodoPage } from '..';
 import { Header } from '../../components';
 const styles = require('./App.scss');
 // Type script can't handle file other than 'ts, tsx'.

@@ -5,12 +5,11 @@ export interface TodoItemProps {
   id: number,
   description: string,
   done: boolean,
-  handleToggle: (id: number) => void,
+  toggleTodo: (id: number) => void,
 }
-const TodoItem: React.SFC<TodoItemProps> = (props) => {
-  const { id, description, done, handleToggle } = props;
-  const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
-    handleToggle(id);
+const TodoItem: React.SFC<TodoItemProps> = ({ id, description, done, toggleTodo }) => {
+  const handleClick = () => {
+    toggleTodo(id);
   }
   return (
     <ul>

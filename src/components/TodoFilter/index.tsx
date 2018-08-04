@@ -3,13 +3,13 @@ const styles = require('./TodoFilter.scss');
 
 export interface TodoFilterProps {
     currentFilter: string;
-    handleFilter: (filter: string) => void;
+    setFilter: (filter: string) => void;
     filterTypes: string[]; 
 }
 
-const TodoFilter: React.SFC<TodoFilterProps> = ({ currentFilter, handleFilter, filterTypes }) => {
+const TodoFilter: React.SFC<TodoFilterProps> = ({ currentFilter, setFilter, filterTypes }) => {
     const handleFilterClick = (filter: string) => () => {
-        handleFilter(filter);
+        setFilter(filter);
     };
     return (
         <div>

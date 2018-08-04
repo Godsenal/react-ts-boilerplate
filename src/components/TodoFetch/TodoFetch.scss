@@ -1,0 +1,17 @@
+@import '../../styles/util.scss';
+
+.container {
+  margin-top: 20px;
+}
+
+.status {
+  margin-top: 5px;
+}
+
+.message {
+  margin: 0px;
+  padding: 5px;
+
+  border: 1px solid $color-secondary-pink;
+  color: $color-secondary-pink;
+}

@@ -4,6 +4,9 @@ import { TodoAction } from '../actions/todo';
 import { 
   ADD_TODO,
   TOGGLE_TODO,
+  FETCH_TODO,
+  FETCH_TODO_SUCCESS,
+  FETCH_TODO_FAILURE,
 } from '../constants';
 
 // Redux State must be immutable.
@@ -12,11 +15,15 @@ import {
 
 /* Type Definition */
 export interface TodoState {
-  readonly todos: Todo[],
+  readonly todos: Todo[];
+  readonly status: string;
+  readonly message: string;
 }
 
 const initialState: TodoState = {
-  todos: []
+  todos: [],
+  status: 'INIT',
+  message: '',
 }
 
 /* Selector Definition */
@@ -59,6 +66,27 @@ export default function todo(state: TodoState = initialState, action: TodoAction
         ...state,
         todos: state.todos.map(todo => todo.id === id ? { ...todo, done: !todo.done } : todo),
       };
+    }
+    case FETCH_TODO: {
+      return {
+        ...state,
+        status: 'WAITING',
+        message: '',
+      };
+    }
+    case FETCH_TODO_SUCCESS: {
+      return {
+        ...state,
+        todos: [...state.todos, ...action.todos],
+        status: 'SUCCESS',
+      }
+    }
+    case FETCH_TODO_FAILURE: {
+      return {
+        ...state,
+        status: 'FAILURE',
+        message: action.message,
+      }
     }
     default:
       return state;

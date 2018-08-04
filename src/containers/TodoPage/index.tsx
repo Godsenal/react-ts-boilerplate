@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TodoList, TodoInput, TodoFilter } from '../../components';
+import { TodoFetch, TodoList, TodoInput, TodoFilter } from '../../components';
 import { RootState, Todo, Filter } from '../../types';
 import * as TodoAction from '../../actions/todo';
 import * as FilterAction from '../../actions/filter';
@@ -11,39 +11,32 @@ const styles = require('./TodoPage.scss');
 /* Props type */
 export interface TodoPageProps {
   todos: Todo[],
+  status: string,
+  message: string,
   filter: Filter,
-  addTodo: (id: number, description: string) => any;
-  toggleTodo: (id: number) => any;
-  setFilter: (filter: string) => any;
+  addTodo: (id: number, description: string) => void;
+  toggleTodo: (id: number) => void;
+  fetchTodo: (length: number) => void;
+  setFilter: (filter: string) => void;
 }
 const mapStateToProps = (state: RootState) => ({
   todos: getVisibleTodo(state),
+  status: state.todo.status,
+  message: state.todo.message,
   filter: state.filter.filter,
 });
-class TodoPage extends React.Component<TodoPageProps> {
-  handleFilter = (filter: string) => {
-    this.props.setFilter(filter);
-  }
-  handleAdd = (id: number, description: string) => {
-    this.props.addTodo(id, description);
-  }
-  handleToggle = (id: number) => {
-    this.props.toggleTodo(id);
-  }
-  render() {
-    const { todos, filter } = this.props;
-    return (
-      <div className={styles.container}>
-        <TodoInput handleAdd={this.handleAdd} />
-        <TodoFilter currentFilter={filter} handleFilter={this.handleFilter} filterTypes={Object.keys(Filter)} />
-        <TodoList list={todos} handleToggle={this.handleToggle} />
-      </div>
-    )
-  }
-}
+const TodoPage: React.SFC<TodoPageProps> = ({ todos, status, message, filter, addTodo, toggleTodo, fetchTodo, setFilter }) => (
+  <div className={styles.container}>
+    <TodoFetch fetchTodo={fetchTodo} status={status} message={message} />
+    <TodoInput addTodo={addTodo} />
+    <TodoFilter currentFilter={filter} setFilter={setFilter} filterTypes={Object.keys(Filter)} />
+    <TodoList list={todos} toggleTodo={toggleTodo} />
+  </div>
+)
 // see https://github.com/piotrwitek/react-redux-typescript-guide#redux-connected-components
 export default connect(mapStateToProps, {
   addTodo: TodoAction.addTodo,
   toggleTodo: TodoAction.toggleTodo,
+  fetchTodo: TodoAction.fetchTodo,
   setFilter: FilterAction.setFilter,
 })(TodoPage);
