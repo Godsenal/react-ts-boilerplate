@@ -2,7 +2,7 @@ import {
   setFilter,
 } from '../../actions/filter';
 import filter from '../filter';
-import Filter from '../../types/Filter';
+import { Filter } from '../../types';
 
 
 describe('filter reducer', () => {
