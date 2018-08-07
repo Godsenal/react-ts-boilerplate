@@ -1,6 +1,6 @@
 enum Filter {
-    ALL = 'ALL',
-    INCOMPLETED = 'INCOMPLETED',
-    COMPLETED = 'COMPLETED',    
+    ALL,
+    INCOMPLETED,
+    COMPLETED,    
 }
 export default Filter;

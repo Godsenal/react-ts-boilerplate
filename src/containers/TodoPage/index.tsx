@@ -17,7 +17,7 @@ export interface TodoPageProps {
   addTodo: (id: number, description: string) => void;
   toggleTodo: (id: number) => void;
   fetchTodo: (length: number) => void;
-  setFilter: (filter: string) => void;
+  setFilter: (filter: Filter) => void;
 }
 const mapStateToProps = (state: RootState) => ({
   todos: getVisibleTodo(state),
@@ -29,7 +29,7 @@ const TodoPage: React.SFC<TodoPageProps> = ({ todos, status, message, filter, ad
   <div className={styles.container}>
     <TodoFetch fetchTodo={fetchTodo} status={status} message={message} />
     <TodoInput addTodo={addTodo} />
-    <TodoFilter currentFilter={filter} setFilter={setFilter} filterTypes={Object.keys(Filter)} />
+    <TodoFilter currentFilter={filter} setFilter={setFilter} />
     <TodoList list={todos} toggleTodo={toggleTodo} />
   </div>
 )

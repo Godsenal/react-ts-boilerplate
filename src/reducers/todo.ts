@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { RootState, Todo } from '../types';
+import { RootState, Todo, Filter } from '../types';
 import { TodoAction } from '../actions/todo';
 import { 
   ADD_TODO,
@@ -34,13 +34,13 @@ export const getVisibleTodo = createSelector(
   [todoSelector, filterSelector],
   (todos, filter) => {
     switch (filter) {
-      case 'ALL': {
+      case Filter.ALL: {
         return todos;
       }
-      case 'COMPLETED': {
+      case Filter.COMPLETED: {
         return todos.filter(item => item.done);
       }
-      case 'INCOMPLETED': {
+      case Filter.INCOMPLETED: {
         return todos.filter(item => !item.done)
       }
       default: {
