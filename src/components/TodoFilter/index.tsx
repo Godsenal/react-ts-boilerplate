@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 import { Filter } from '../../types';
-const styles = require("./TodoFilter.scss");
+const styles = require('./TodoFilter.scss');
 
 export interface TodoFilterProps {
   currentFilter: Filter;
@@ -25,7 +25,7 @@ const TodoFilter: React.SFC<TodoFilterProps> = ({
             onClick={handleFilterClick(i)}
           >
             {Filter[i]}
-          </li> 
+          </li>
         ))}
       </ul>
     </div>

@@ -3,7 +3,7 @@ import { generateId } from '../../utils/id';
 const styles = require('./TodoInput.scss');
 
 export interface TodoInputProps {
-  addTodo: (id: number, description: string) => void,
+  addTodo: (id: number, description: string) => void;
 }
 
 const TodoInput: React.SFC<TodoInputProps> = ({ addTodo }) => {
@@ -13,13 +13,13 @@ const TodoInput: React.SFC<TodoInputProps> = ({ addTodo }) => {
       handleAdd(inputRef.current.value);
       inputRef.current.value = '';
     }
-  }
+  };
   const handleAdd = (description: string) => {
     if (description.trim().length > 0) {
       const id = generateId();
       addTodo(id, description);
     }
-  }
+  };
   return (
     <div className={styles.container}>
       <input
@@ -29,7 +29,7 @@ const TodoInput: React.SFC<TodoInputProps> = ({ addTodo }) => {
         onKeyPress={handleKeyPress}
       />
     </div>
-  )
-}
+  );
+};
 
 export default TodoInput;

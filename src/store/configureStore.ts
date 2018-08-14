@@ -7,14 +7,17 @@ import rootSaga from '../sagas';
 const sagaMiddleware = createSagaMiddleware();
 function configureStoreProd(initialState?: object) {
   // Redux middlewares like thunks, saga
-  const middlewares = [
-    sagaMiddleware,
-  ];
+  const middlewares = [sagaMiddleware];
 
   // use ! for telling compiler "this expression cannot be null or undefined here
   // so don't complain about possibility of initialState being null or undefined"
+  // tslint:disable-next-line:max-line-length
   // https://github.com/Microsoft/TypeScript/wiki/What's-new-in-TypeScript#non-null-assertion-operator
-  const store = createStore(rootReducer, initialState!, compose(applyMiddleware(...middlewares)));
+  const store = createStore(
+    rootReducer,
+    initialState!,
+    compose(applyMiddleware(...middlewares)),
+  );
 
   sagaMiddleware.run(rootSaga);
 
@@ -33,10 +36,13 @@ function configureStoreDev(initialState?: object) {
     /* Redux middlewares like thunks */
   ];
 
-  const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-  const store = createStore(rootReducer, initialState!, composeEnhancers(
-    applyMiddleware(...middlewares)
-  ));
+  const composeEnhancers =
+    (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+  const store = createStore(
+    rootReducer,
+    initialState!,
+    composeEnhancers(applyMiddleware(...middlewares)),
+  );
 
   sagaMiddleware.run(rootSaga);
 
@@ -49,6 +55,8 @@ function configureStoreDev(initialState?: object) {
   return store;
 }
 
-
-const configureStore = process.env.NODE_ENV === 'production' ? configureStoreProd : configureStoreDev;
+const configureStore =
+  process.env.NODE_ENV === 'production'
+    ? configureStoreProd
+    : configureStoreDev;
 export default configureStore;

@@ -10,9 +10,16 @@ const Home: React.SFC = () => (
     <img className={styles.icon} src={Icon} />
     <div className={styles.sub_container}>
       <h2>Welcome to simple react typescript boilerplate.</h2>
-      <a className={styles.link} href="https://github.com/Godsenal/react-ts-boilerplate">Github</a>
+      <a
+        className={styles.link}
+        href="https://github.com/Godsenal/react-ts-boilerplate"
+      >
+        Github
+      </a>
       <h2>Example</h2>
-      <Link className={styles.link} to="/todo">Todo</Link>
+      <Link className={styles.link} to="/todo">
+        Todo
+      </Link>
     </div>
   </div>
 );

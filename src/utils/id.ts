@@ -1,4 +1,5 @@
 let id = 0;
 export function generateId() {
-    return id++;
+  id = id + 1;
+  return id;
 }

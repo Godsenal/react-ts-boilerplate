@@ -3,9 +3,10 @@ import {
   TOGGLE_TODO,
   FETCH_TODO,
   FETCH_TODO_SUCCESS,
-  FETCH_TODO_FAILURE
-} from "../constants";
-import { Todo } from "../types";
+  FETCH_TODO_FAILURE,
+} from '../constants';
+import { Todo } from '../types';
+import todo from '../sagas/todo';
 
 // action's return type.
 export interface AddTodo {
@@ -50,31 +51,31 @@ export function addTodo(id: number, description: string): AddTodo {
     todo: {
       id,
       description,
-      done: false
-    }
+      done: false,
+    },
   };
 }
 export function toggleTodo(id: number): ToggleTodo {
   return {
     type: TOGGLE_TODO,
-    id
+    id,
   };
 }
 export function fetchTodo(length: number): FetchTodo {
   return {
     type: FETCH_TODO,
-    length
+    length,
   };
 }
 export function fetchTodoSuccess(todos: Todo[]): FetchTodoSuccess {
   return {
     type: FETCH_TODO_SUCCESS,
-    todos
+    todos,
   };
 }
 export function fetchTodoFailure(message: string): FetchTodoFailure {
   return {
     type: FETCH_TODO_FAILURE,
-    message
+    message,
   };
 }

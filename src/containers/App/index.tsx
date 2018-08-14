@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Route,
-  Switch,
-} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
 import { Home, TodoPage } from '..';
@@ -30,4 +27,3 @@ class App extends React.Component {
 }
 
 export default hot(module)(App);
-

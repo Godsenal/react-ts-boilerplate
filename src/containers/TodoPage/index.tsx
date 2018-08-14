@@ -10,10 +10,10 @@ const styles = require('./TodoPage.scss');
 
 /* Props type */
 export interface TodoPageProps {
-  todos: Todo[],
-  status: string,
-  message: string,
-  filter: Filter,
+  todos: Todo[];
+  status: string;
+  message: string;
+  filter: Filter;
   addTodo: (id: number, description: string) => void;
   toggleTodo: (id: number) => void;
   fetchTodo: (length: number) => void;
@@ -25,18 +25,30 @@ const mapStateToProps = (state: RootState) => ({
   message: state.todo.message,
   filter: state.filter.filter,
 });
-const TodoPage: React.SFC<TodoPageProps> = ({ todos, status, message, filter, addTodo, toggleTodo, fetchTodo, setFilter }) => (
+const TodoPage: React.SFC<TodoPageProps> = ({
+  todos,
+  status,
+  message,
+  filter,
+  addTodo,
+  toggleTodo,
+  fetchTodo,
+  setFilter,
+}) => (
   <div className={styles.container}>
     <TodoFetch fetchTodo={fetchTodo} status={status} message={message} />
     <TodoInput addTodo={addTodo} />
     <TodoFilter currentFilter={filter} setFilter={setFilter} />
     <TodoList list={todos} toggleTodo={toggleTodo} />
   </div>
-)
+);
 // see https://github.com/piotrwitek/react-redux-typescript-guide#redux-connected-components
-export default connect(mapStateToProps, {
-  addTodo: TodoAction.addTodo,
-  toggleTodo: TodoAction.toggleTodo,
-  fetchTodo: TodoAction.fetchTodo,
-  setFilter: FilterAction.setFilter,
-})(TodoPage);
+export default connect(
+  mapStateToProps,
+  {
+    addTodo: TodoAction.addTodo,
+    toggleTodo: TodoAction.toggleTodo,
+    fetchTodo: TodoAction.fetchTodo,
+    setFilter: FilterAction.setFilter,
+  },
+)(TodoPage);

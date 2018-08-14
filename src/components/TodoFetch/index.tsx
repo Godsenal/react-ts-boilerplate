@@ -1,4 +1,4 @@
-import React, { createRef } from "react";
+import React, { createRef } from 'react';
 const styles = require('./TodoFetch.scss');
 
 export interface TodoFetchProps {
@@ -6,11 +6,16 @@ export interface TodoFetchProps {
   status: string;
   message: string;
 }
-const TodoFetch: React.SFC<TodoFetchProps> = ({ fetchTodo, status, message }) => {
+const TodoFetch: React.SFC<TodoFetchProps> = ({
+  fetchTodo,
+  status,
+  message,
+}) => {
   const lengthRef: React.RefObject<HTMLInputElement> = createRef();
   const handleFetch = () => {
     if (lengthRef.current) {
-      fetchTodo(parseInt(lengthRef.current.value));
+      const length = parseInt(lengthRef.current.value, 10);
+      fetchTodo(length);
     }
   };
   return (

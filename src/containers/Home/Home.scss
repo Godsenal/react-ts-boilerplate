@@ -1,11 +1,12 @@
 @keyframes rotation {
   from {
-      -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
   }
   to {
-      -webkit-transform: rotate(359deg);
+    -webkit-transform: rotate(359deg);
   }
 }
+
 .container {
   height: 100vh;
   background-color: #292C34;
@@ -15,18 +16,22 @@
   align-items: center;
   text-align: center;
 }
+
 .header {
   font-size: 3.5em;
   margin: 0;
   color: #78D9FB;
 }
+
 .sub_container {
   color: white;
   font-size: 1.5em;
 }
+
 .icon {
   animation: rotation 10s infinite linear;
 }
+
 .link {
   color: #78D9FB;
   text-decoration: none;

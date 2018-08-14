@@ -1,5 +1,10 @@
 {
     "extends": [
         "tslint-config-airbnb"
-    ]
+    ],
+    "rules": {
+        "object-shorthand-properties-first": false,
+        "import-name": false,
+        "variable-name": false
+    }
 }
