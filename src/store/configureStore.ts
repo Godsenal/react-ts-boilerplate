@@ -3,6 +3,7 @@ import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import createSagaMiddleware from 'redux-saga';
 import rootReducer from '../reducers';
 import rootSaga from '../sagas';
+require("regenerator-runtime/runtime");
 
 const sagaMiddleware = createSagaMiddleware();
 function configureStoreProd(initialState?: object) {
