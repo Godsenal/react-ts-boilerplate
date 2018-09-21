@@ -1,14 +1,14 @@
-const path = require('path');
-const webpack = require('webpack');
-const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('../../config/webpack.config.dev.js');
+import path from 'path';
+import { Application, Request, Response } from 'express';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import config from '../../config/webpack.config.dev.js';
 
-module.exports = function setupDev(app) {
+export default function setupDev(app: Application) {
   const { publicPath, path: outputPath } = config.output;
-  const compiler = webpack(config);
+  const compiler: webpack.Compiler = webpack(config as webpack.Configuration);
   const middleware = webpackDevMiddleware(compiler, {
-    noInfo: true,
     publicPath,
   });
   app.use(middleware);
@@ -16,7 +16,7 @@ module.exports = function setupDev(app) {
   // webpackDevMiddleware uses memory-fs internally to store build
   // https://github.com/jantimon/html-webpack-plugin/issues/145#issuecomment-170554832
   const fs = middleware.fileSystem;
-  app.get('*', (req, res) => {
+  app.get('*', (req: Request, res: Response) => {
     fs.readFile(path.join(outputPath, 'index.html'), (err, file) => {
       if (err) {
         res.sendStatus(404);
