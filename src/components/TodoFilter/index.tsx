@@ -1,10 +1,11 @@
 import React from 'react';
+import * as FilterActions from '../../actions/filter';
 import { Filter } from '../../types';
 const styles = require('./TodoFilter.scss');
 
 export interface TodoFilterProps {
   currentFilter: Filter;
-  setFilter: (filter: Filter) => void;
+  setFilter: typeof FilterActions.setFilter;
 }
 
 const TodoFilter: React.SFC<TodoFilterProps> = ({

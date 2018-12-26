@@ -1,9 +1,10 @@
 import React, { createRef } from 'react';
+import * as TodoActions from '../../actions/todo';
 import { generateId } from '../../utils/id';
 const styles = require('./TodoInput.scss');
 
 export interface TodoInputProps {
-  addTodo: (id: number, description: string) => void;
+  addTodo: typeof TodoActions.addTodo;
 }
 
 const TodoInput: React.SFC<TodoInputProps> = ({ addTodo }) => {
@@ -17,7 +18,7 @@ const TodoInput: React.SFC<TodoInputProps> = ({ addTodo }) => {
   const handleAdd = (description: string) => {
     if (description.trim().length > 0) {
       const id = generateId();
-      addTodo(id, description);
+      addTodo({id, description, done: false});
     }
   };
   return (

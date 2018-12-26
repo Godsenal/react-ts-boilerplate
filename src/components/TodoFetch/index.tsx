@@ -1,8 +1,9 @@
 import React, { createRef } from 'react';
+import * as TodoActions from '../../actions/todo';
 const styles = require('./TodoFetch.scss');
 
 export interface TodoFetchProps {
-  fetchTodo: (length: number) => void;
+  fetchTodo: typeof TodoActions.fetchTodo;
   status: string;
   message: string;
 }

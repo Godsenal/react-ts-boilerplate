@@ -1,10 +1,19 @@
 
 /* For test selector */
-import { getVisibleTodo } from '../todo';
+import { getVisibleTodo, TodoState } from '../todo';
 import { Filter } from '../../types';
 
 describe('todo selector', () => {
-  const todo = {
+  const todo: TodoState = {
+    add: {
+      status: 'INIT',
+    },
+    delete: {
+      status: 'INIT',
+    },
+    fetch: {
+      status: 'INIT',
+    },
     todos: [{
       id: 0,
       description: 'completed todo',
@@ -14,7 +23,6 @@ describe('todo selector', () => {
       description: 'incompleted todo',
       done: false,
     }],
-    status: 'INIT',
     message: '',
   };
   const filter = {

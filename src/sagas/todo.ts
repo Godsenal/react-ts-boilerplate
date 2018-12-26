@@ -1,47 +1,41 @@
 import { all, fork, put, take, call } from 'redux-saga/effects';
-import { FetchTodo, fetchTodoSuccess, fetchTodoFailure } from '../actions/todo';
-import { FETCH_TODO } from '../constants';
-import { Todo } from '../types';
-import { generateId } from '../utils/id';
+import * as TodoActions from '../actions/todo';
+import * as apis from '../apis';
+import * as ActionTypes from '../constants';
 
-function fakeFetch(length: number, ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(
-      () => {
-        const fakeTodos: Todo[] = Array.apply(null, Array(length)).map(() => ({
-          id: generateId(),
-          description: 'fake Fetched Todo!',
-          done: false,
-        }));
-        resolve(fakeTodos);
-      },
-      ms,
-    );
-  });
-}
-function* fetchTodo(actions: FetchTodo) {
+function* baseFetch(entity: TodoActions.BaseActions, api: () => Promise<any>, payload: TodoActions.TodoAction)  {
+  yield put(entity.fetching());
   try {
-    const { length } = actions;
-    if (isNaN(length)) {
-      throw new Error('You can fetch only number type');
-    }
-    if (length <= 0 || length > 100) {
-      throw new Error('You can fetch only from 1 to 100 todos!');
-    }
-    const todos = yield call(fakeFetch, length, 1000);
-    // you can just yield normal function.
-    // however, it makes much more difficult to test.
-    yield put(fetchTodoSuccess(todos));
-  } catch (e) {
-    yield put(fetchTodoFailure(e.message));
+    const response = yield call(api, payload);
+    yield put(entity.success(response));
+  }
+  catch (err) {
+    yield put(entity.failure(err));
+  }
+}
+const addTodo = baseFetch.bind(null, TodoActions.addTodoActions);
+const deleteTodo = baseFetch.bind(null, TodoActions.deleteTodoActions);
+const fetchTodo = baseFetch.bind(null, TodoActions.fetchTodoActions);
+
+function* watchAddTodo() {
+  while(true) {
+    const payload: TodoActions.AddTodo = yield take(ActionTypes.ADD_TODO);
+    yield fork(addTodo, apis.addTodo, payload);
+  }
+}
+function* watchDeleteTodo() {
+  while(true) {
+    const payload: TodoActions.DeleteTodo = yield take(ActionTypes.DELETE_TODO);
+    yield fork(deleteTodo, apis.deleteTodo, payload);
   }
 }
 function* watchFetchTodo() {
-  while (true) {
-    const actions: FetchTodo = yield take(FETCH_TODO);
-    yield fork(fetchTodo, actions);
+  while(true) {
+    const payload: TodoActions.FetchTodo = yield take(ActionTypes.FETCH_TODO);
+    yield fork(fetchTodo, apis.fetchTodo, payload);
   }
 }
+
 export default function* () {
-  yield all([fork(watchFetchTodo)]);
+  yield all([fork(watchAddTodo), fork(watchDeleteTodo), fork(watchFetchTodo)]);
 }

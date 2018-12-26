@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { TodoFetch, TodoList, TodoInput, TodoFilter } from '../../components';
-import { RootState, Todo, Filter } from '../../types';
+import { RootState, Todo, Filter, Request } from '../../types';
 import * as TodoAction from '../../actions/todo';
 import * as FilterAction from '../../actions/filter';
 import { getVisibleTodo } from '../../reducers/todo';
@@ -11,23 +11,26 @@ const styles = require('./TodoPage.scss');
 /* Props type */
 export interface TodoPageProps {
   todos: Todo[];
-  status: string;
+  addStatus: Request;
+  fetchStatus: Request;
   message: string;
   filter: Filter;
-  addTodo: (id: number, description: string) => void;
-  toggleTodo: (id: number) => void;
-  fetchTodo: (length: number) => void;
-  setFilter: (filter: Filter) => void;
+  addTodo: typeof TodoAction.addTodo;
+  toggleTodo: typeof TodoAction.toggleTodo;
+  fetchTodo: typeof TodoAction.fetchTodo;
+  setFilter: typeof FilterAction.setFilter;
 }
 const mapStateToProps = (state: RootState) => ({
   todos: getVisibleTodo(state),
-  status: state.todo.status,
+  addStatus: state.todo.add.status,
+  fetchStatus: state.todo.fetch.status,
   message: state.todo.message,
   filter: state.filter.filter,
 });
 const TodoPage: React.SFC<TodoPageProps> = ({
   todos,
-  status,
+  addStatus,
+  fetchStatus,
   message,
   filter,
   addTodo,
@@ -36,10 +39,10 @@ const TodoPage: React.SFC<TodoPageProps> = ({
   setFilter,
 }) => (
   <div className={styles.container}>
-    <TodoFetch fetchTodo={fetchTodo} status={status} message={message} />
+    <TodoFetch fetchTodo={fetchTodo} status={fetchStatus} message={message} />
     <TodoInput addTodo={addTodo} />
     <TodoFilter currentFilter={filter} setFilter={setFilter} />
-    <TodoList list={todos} toggleTodo={toggleTodo} />
+    <TodoList list={todos} toggleTodo={toggleTodo} loading={addStatus === 'FETCHING'} />
   </div>
 );
 // see https://github.com/piotrwitek/react-redux-typescript-guide#redux-connected-components

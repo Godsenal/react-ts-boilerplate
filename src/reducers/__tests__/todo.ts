@@ -1,16 +1,22 @@
 import {
-  addTodo,
   toggleTodo,
-  fetchTodo,
-  fetchTodoSuccess,
-  fetchTodoFailure,
+  addTodoActions,
+  fetchTodoActions,
 } from '../../actions/todo';
-import todo from '../todo';
+import todo, { TodoState } from '../todo';
 
 describe('todo reducer', () => {
-  const initialState = {
+  const initialState: TodoState = {
+    add: {
+      status: 'INIT',
+    },
+    delete: {
+      status: 'INIT',
+    },
+    fetch: {
+      status: 'INIT',
+    },
     todos: [],
-    status: 'INIT',
     message: '',
   };
   it('should have initial value', () => {
@@ -24,9 +30,9 @@ describe('todo reducer', () => {
   it('should handle addTodo', () => {
     // arrange
     const newTodo = { id: 0, description: 'todo', done: false };
-    const expected = { ...initialState, todos: [newTodo]};
+    const expected = { ...initialState, add: { status: 'FETCHING' }};
     // act
-    const actual = todo(initialState, addTodo(newTodo.id, newTodo.description));
+    const actual = todo(initialState, addTodoActions.fetching({newTodo}));
     // assert
     expect(actual).toEqual(expected);
   });
@@ -42,9 +48,9 @@ describe('todo reducer', () => {
   });
   it('should handle fetchTodo', () => {
     // arrange
-    const expected = { ...initialState, status: 'WAITING' };
+    const expected = { ...initialState, fetch: { status: 'FETCHING' } };
     // act
-    const actual = todo(undefined, fetchTodo(3));
+    const actual = todo(undefined, fetchTodoActions.fetching(3));
     // assert
     expect(actual).toEqual(expected);
   });
@@ -57,10 +63,12 @@ describe('todo reducer', () => {
     const expected = {
       ...initialState,
       todos,
-      status: 'SUCCESS',
+      fetch: {
+        status: 'SUCCESS',
+      },
     };
     // act
-    const actual = todo(undefined, fetchTodoSuccess(todos));
+    const actual = todo(undefined, fetchTodoActions.success({ todos }));
     // assert
     expect(actual).toEqual(expected);
   });
@@ -69,11 +77,13 @@ describe('todo reducer', () => {
     const message = 'error';
     const expected = {
       ...initialState,
+      fetch: {
+        status: 'FAILURE',
+      },
       message,
-      status: 'FAILURE',
     };
     // act
-    const actual = todo(undefined, fetchTodoFailure(message));
+    const actual = todo(undefined, fetchTodoActions.failure({ message }));
     // assert
     expect(actual).toEqual(expected);
   });

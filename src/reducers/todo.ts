@@ -1,13 +1,7 @@
 import { createSelector } from 'reselect';
-import { RootState, Todo, Filter } from '../types';
+import { RootState, Todo, Filter, Request } from '../types';
 import { TodoAction } from '../actions/todo';
-import {
-  ADD_TODO,
-  TOGGLE_TODO,
-  FETCH_TODO,
-  FETCH_TODO_SUCCESS,
-  FETCH_TODO_FAILURE,
-} from '../constants';
+import * as ActionTypes from '../constants';
 
 // Redux State must be immutable.
 // Add 'readonly' property.
@@ -15,14 +9,30 @@ import {
 
 /* Type Definition */
 export interface TodoState {
-  readonly todos: Todo[];
-  readonly status: string;
-  readonly message: string;
+  add: {
+    status: Request;
+  },
+  delete: {
+    status: Request;
+  },
+  fetch: {
+    status: Request;
+  },
+  todos: Todo[];
+  message: string;
 }
 
 const initialState: TodoState = {
+  add: {
+    status: 'INIT',
+  },
+  delete: {
+    status: 'INIT',
+  },
+  fetch: {
+    status: 'INIT',
+  },
   todos: [],
-  status: 'INIT',
   message: '',
 };
 
@@ -56,14 +66,32 @@ export default function todo(
   action: TodoAction,
 ): TodoState {
   switch (action.type) {
-    case ADD_TODO: {
-      const { todo } = action;
+    case ActionTypes.ADD_TODO_FETCHING: {
       return {
         ...state,
-        todos: [...state.todos, todo],
+        add: {
+          status: 'FETCHING'
+        }
       };
     }
-    case TOGGLE_TODO: {
+    case ActionTypes.ADD_TODO_SUCCESS: {
+      return {
+        ...state,
+        add: {
+          status: 'SUCCESS'
+        },
+        todos: action.todos,
+      }
+    }
+    case ActionTypes.ADD_TODO_FAILURE: {
+      return {
+        ...state,
+        add: {
+          status: 'FAILURE',
+        }
+      };
+    }
+    case ActionTypes.TOGGLE_TODO: {
       const { id } = action;
       return {
         ...state,
@@ -72,24 +100,29 @@ export default function todo(
         ),
       };
     }
-    case FETCH_TODO: {
+    case ActionTypes.FETCH_TODO_FETCHING: {
       return {
         ...state,
-        status: 'WAITING',
-        message: '',
+        fetch: {
+          status: 'FETCHING',
+        }
       };
     }
-    case FETCH_TODO_SUCCESS: {
+    case ActionTypes.FETCH_TODO_SUCCESS: {
       return {
         ...state,
-        todos: [...state.todos, ...action.todos],
-        status: 'SUCCESS',
+        fetch: {
+          status: 'SUCCESS',
+        },
+        todos: action.todos,
       };
     }
-    case FETCH_TODO_FAILURE: {
+    case ActionTypes.FETCH_TODO_FAILURE: {
       return {
         ...state,
-        status: 'FAILURE',
+        fetch: {
+          status: 'FAILURE',
+        },
         message: action.message,
       };
     }
